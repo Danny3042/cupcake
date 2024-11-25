@@ -1,25 +1,22 @@
-import { MatButtonModule} from '@angular/material/button';
-import { MatCardModule} from '@angular/material/card';
-import { MatIconModule} from '@angular/material/icon';
-import { MatInputModule} from '@angular/material/input';
-import { MatListModule} from '@angular/material/list';
-import {NgModel} from '@angular/forms';
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [
-    MatButtonModule,
-    MatCardModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
     MatIconModule,
-    MatInputModule,
+    MatToolbarModule,
     MatListModule,
+    HomeComponent,
   ],
-  exports: [
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-  ]
+  providers: [],
 })
 export class AppModule { }

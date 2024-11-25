@@ -12,7 +12,7 @@ import { map, shareReplay } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
   standalone: true,
   imports: [
     MatToolbarModule,
