@@ -1,6 +1,6 @@
 
 
-
+@import '@angular/material/prebuilt-themes/rose-red.css';
 .sidenav-container {
   height: 100%;
 }
