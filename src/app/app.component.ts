@@ -10,7 +10,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent, AsyncPipe, MatSidenavModule, MatToolbarModule],
+  imports: [AsyncPipe, MatSidenavModule, MatToolbarModule],
   templateUrl: './home/home.component.html',
   styleUrls: ['./home/home.component.css']
 })

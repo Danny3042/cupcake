@@ -7,14 +7,7 @@ import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-details',
-  imports: [
-    MatCard,
-    MatCardContent,
-    MatCardTitle,
-    MatCardActions,
-    MatButton,
-    MatCardImage
-  ],
+  standalone: false,
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })

@@ -13,15 +13,7 @@ import { map, shareReplay } from 'rxjs/operators';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  standalone: true,
-  imports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    AsyncPipe,
-  ]
+  standalone: false,
 })
 export class HomeComponent {
   private breakpointObserver = inject(BreakpointObserver);
