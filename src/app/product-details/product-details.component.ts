@@ -2,10 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { ProductService} from '../services/product.service';
 import { Product} from '../models/product.model';
+import {MatCard, MatCardActions, MatCardContent, MatCardImage, MatCardTitle} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-details',
-  imports: [],
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardTitle,
+    MatCardActions,
+    MatButton,
+    MatCardImage
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
