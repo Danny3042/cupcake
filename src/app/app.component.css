@@ -22,3 +22,32 @@
     width: 100%;
   }
 }
+.spacer {
+  flex: 1 auto;
+}
+
+
+.toggle-dark-mode-button {
+  display: flex;
+  align-items: center;
+  transition: width 0.3s;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 48px; /* Initial width to show only the icon */
+}
+
+.toggle-dark-mode-button:hover {
+  width: 200px; /* Expanded width to show the text */
+}
+
+.toggle-text {
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.toggle-dark-mode-button:hover .toggle-text {
+  opacity: 1;
+}
+
+

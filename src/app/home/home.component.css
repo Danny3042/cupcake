@@ -18,3 +18,12 @@
   top: 0;
   z-index: 1;
 }
+
+.mat-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.mat-list-item mat-icon {
+  margin-right: 8px; /* Adjust the spacing between the icon and the text */
+}
