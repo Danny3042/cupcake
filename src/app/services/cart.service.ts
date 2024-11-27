@@ -1,5 +1,6 @@
 // src/app/services/cart.service.ts
 import { Injectable } from '@angular/core';
+import { BehaviorSubject} from 'rxjs';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -7,9 +8,17 @@ import { Product } from '../models/product.model';
 })
 export class CartService {
   private items: Product[] = [];
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
 
   addToCart(product: Product) {
-    this.items.push(product);
+    this.loadingSubject.next(true);
+    setTimeout(() => {
+      this.items.push(product);
+      this.loadingSubject.next(false);
+      console.log('Product added to cart:', product);
+    }, 1000);
+
   }
 
   getItems() {

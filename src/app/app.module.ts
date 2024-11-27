@@ -9,16 +9,12 @@ import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductListComponent } from './product-list/product-list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ProductDetailsComponent,
-    ProductListComponent,
     ShoppingCartComponent,
   ],
   imports: [

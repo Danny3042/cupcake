@@ -1,6 +1,3 @@
-
-
-
 .sidenav-container {
   height: 100%;
 }
@@ -17,6 +14,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  height: 64px;
 }
 
 .mat-list-item {
@@ -26,4 +24,38 @@
 
 .mat-list-item mat-icon {
   margin-right: 8px; /* Adjust the spacing between the icon and the text */
+}
+
+.mat-sidenav-content {
+  padding-top: 10px; /* Adjust this value based on the height of your toolbar */
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  justify-content: center;
+}
+
+.product-card {
+  width: calc(25% - 32px); /* Adjust the width to make the cards smaller */
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    width: calc(50% - 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    width: 100%;
+  }
+}
+
+.spacer {
+  flex: 1 auto;
 }
