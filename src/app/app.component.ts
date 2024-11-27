@@ -11,10 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Product } from './models/product.model';
 import { CartService } from './services/cart.service';
+import {NavbarComponent} from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, RouterLink, MatButtonModule, RouterOutlet, MatCardModule],
+  imports: [MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatButtonModule, MatCardModule, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
