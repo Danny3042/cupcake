@@ -30,6 +30,14 @@ export class CartService {
     return this.items;
   }
 
+
+  removeItem(product: Product): void {
+    const index = this.items.indexOf(product);
+    if (index > -1) {
+      this.items.splice(index, 1);
+    }
+  }
+
   getTotalAmount() {
     return this.items.reduce((total, product) => total + product.price, 0);
   }

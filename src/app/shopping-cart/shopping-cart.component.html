@@ -1,10 +1,13 @@
+
 <div>
   <h2>Shopping Cart</h2>
   <div *ngIf="items.length === 0">
     <p>No items in cart</p>
   </div>
   <div *ngFor="let item of items">
-    <p>{{ item.name }} - {{ item.price | currency: 'GBP' }}</p>
+    <p>{{ item.name }} - {{ item.price | currency: 'GBP' }}
+      <button (click)="removeItem(item)">Remove</button>
+    </p>
   </div>
   <p *ngIf="items.length > 0">Total: {{ totalAmount | currency: 'GBP' }}</p>
 </div>

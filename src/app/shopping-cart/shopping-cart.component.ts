@@ -2,11 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../models/product.model';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
-  standalone: false,
+  imports: [
+    CurrencyPipe
+  ],
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
@@ -16,7 +19,16 @@ export class ShoppingCartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
+    this.loadCart()
+  }
+
+  loadCart(): void {
     this.items = this.cartService.getItems();
     this.totalAmount = this.cartService.getTotalAmount();
+  }
+
+  removeItem(product: Product): void {
+    this.cartService.removeItem(product);
+    this.loadCart();
   }
 }
