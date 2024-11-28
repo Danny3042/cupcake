@@ -1,21 +1,35 @@
 import { Component } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { RouterLink, Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 import { Product } from '../models/product.model';
 import { CartService } from '../services/cart.service';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardModule
+} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  standalone: false,
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
+    MatButton,
+    MatCardImage,
+    CurrencyPipe,
+    NgForOf,
+    MatCardModule,
+  ],
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {

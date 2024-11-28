@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { MatButtonModule } from '@angular/material/button';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { SharedModule } from './shared.module';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    HomeComponent,
     ShoppingCartComponent,
   ],
   imports: [
@@ -22,14 +18,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     RouterModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatListModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatButtonModule,
+    SharedModule,
   ],
   providers: [],
-  bootstrap: [HomeComponent]
+  bootstrap: []
 })
 export class AppModule { }

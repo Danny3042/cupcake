@@ -2,21 +2,21 @@ import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { RouterLink, RouterOutlet, Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { Product } from './models/product.model';
 import { CartService } from './services/cart.service';
 import {NavbarComponent} from './navbar/navbar.component';
+import {HomeComponent} from './home/home.component';
+import {AppModule} from './app.module';
 
 @Component({
   selector: 'app-root',
-  imports: [MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatButtonModule, MatCardModule, NavbarComponent],
   templateUrl: './app.component.html',
+  imports: [
+    NavbarComponent,
+    HomeComponent,
+  ],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
