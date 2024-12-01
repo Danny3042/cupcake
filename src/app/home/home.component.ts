@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   addToCart(products: Product) {
     this.cartService.addToCart(products);
     window.alert('Your product has been added to the cart!');
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/cart']).then(r => console.log(r));
 
   }
 
