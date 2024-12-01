@@ -11,7 +11,7 @@ import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    ShoppingCartComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
     AppRoutingModule,
     RouterModule,
     SharedModule,
+    ShoppingCartComponent,
   ],
   providers: [],
   bootstrap: []

@@ -2,13 +2,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../models/product.model';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   imports: [
-    CurrencyPipe
+    CurrencyPipe,
+    NgForOf,
+    NgIf
   ],
   styleUrls: ['./shopping-cart.component.css']
 })

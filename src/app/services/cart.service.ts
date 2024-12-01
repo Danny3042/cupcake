@@ -8,16 +8,10 @@ import { Product } from '../models/product.model';
 })
 export class CartService {
   private items: Product[] = [];
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  loading$ = this.loadingSubject.asObservable();
 
   addToCart(product: Product) {
-    this.loadingSubject.next(true);
-    setTimeout(() => {
-      this.items.push(product);
-      this.loadingSubject.next(false);
-      console.log('Product added to cart:', product);
-    }, 1000);
+    this.items.push(product);
+    console.log("product added to cart", product);
 
   }
 
