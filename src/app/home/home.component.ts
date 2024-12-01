@@ -6,12 +6,30 @@ import {ActivatedRoute, Route, Router, RouterOutlet} from '@angular/router';
 import { Product } from '../models/product.model';
 import { CartService } from '../services/cart.service';
 import { products } from '../products';
+import {
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardModule
+} from '@angular/material/card';
+import {MatButton, MatButtonModule} from '@angular/material/button';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  standalone: false,
+  imports: [
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
+    MatButtonModule,
+    MatCardImage,
+    CurrencyPipe,
+    NgForOf,
+    MatCardModule
+  ],
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
