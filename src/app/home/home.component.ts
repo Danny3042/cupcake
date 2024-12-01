@@ -49,10 +49,9 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  addToCart(products: Product) {
-    this.cartService.addToCart(products);
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
     window.alert('Your product has been added to the cart!');
-    this.router.navigate(['/cart']).then(r => console.log(r));
 
   }
 

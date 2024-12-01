@@ -6,7 +6,7 @@
   </div>
   <div *ngFor="let item of items">
     <p>{{ item.name }} - {{ item.price | currency: 'GBP' }}
-      <button (click)="removeItem(item)">Remove</button>
+      <button mat-button (click)="removeItem(item)">Remove</button>
     </p>
   </div>
   <p *ngIf="items.length > 0">Total: {{ totalAmount | currency: 'GBP' }}</p>
