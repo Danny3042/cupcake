@@ -21,7 +21,7 @@ export class CartService {
     if (typeof localStorage !== 'undefined') {
       const savedItems = localStorage.getItem('cart-items');
       if (savedItems) {
-        this.items = JSON.parse(savedItems);
+        this.items = JSON.parse(savedItems) || [];
       }
     }
   }

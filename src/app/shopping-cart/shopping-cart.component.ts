@@ -1,9 +1,10 @@
-// src/app/shopping-cart/shopping-cart.component.ts
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../models/product.model';
 import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
+import {CartitemComponent} from '../cartitem/cartitem.component';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,29 +12,42 @@ import {MatButton} from '@angular/material/button';
   imports: [
     CurrencyPipe,
     NgForOf,
-    NgIf,
-    MatButton
+    CartitemComponent,
+    MatCardActions,
+    MatCardContent,
+    MatCardTitle,
+    MatCardHeader,
+    MatCard
   ],
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  items: Product[] = [];
-  totalAmount: number = 0;
+  total: number = 0;
+  @Input() cartTotal!: number;
+  @Input() cartItems!: Product[];
+  @Output() cartItemDeleted = new EventEmitter<{
+    productId: number
+  }>();
+  @Output() cartItemChanged = new EventEmitter<{
+    productId: number
+  }>();
 
-  constructor(private cartService: CartService) {}
-
-  ngOnInit(): void {
-    this.loadCart();
+  onCartItemDeleted(productData:{productId: number}) {
+    this.cartItemDeleted.emit({
+      productId: productData.productId
+    });
   }
 
-  loadCart(): void {
-    this.items = this.cartService.getItems();
-    this.totalAmount = this.cartService.getTotalAmount();
-    console.log("cart items", this.items);
+  onCartItemChanged(productData:{productId: number}) {
+    this.cartItemChanged.emit({
+      productId: productData.productId
+    });
   }
 
-  removeItem(product: Product): void {
-    this.cartService.removeItem(product);
-    this.loadCart();
+  constructor() {
   }
+
+  ngOnInit() {
+  }
+
 }

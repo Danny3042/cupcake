@@ -1,13 +1,27 @@
-
-<div>
-  <h2>Shopping Cart</h2>
-  <div *ngIf="items.length === 0">
-    <p>No items in cart</p>
-  </div>
-  <div *ngFor="let item of items">
-    <p>{{ item.name }} - {{ item.price | currency: 'GBP' }}
-      <button mat-button (click)="removeItem(item)">Remove</button>
-    </p>
-  </div>
-  <p *ngIf="items.length > 0">Total: {{ totalAmount | currency: 'GBP' }}</p>
+<div class="cart-wrapper">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Shopping Cart</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="cart-header">
+        <div>Item</div>
+        <div>Price</div>
+        <div>Quantity</div>
+        <div>Total Price</div>
+        <div></div>
+      </div>
+      <div class="cart-items">
+        <app-cartitem
+          *ngFor="let item of cartItems; let i = index"
+          [cartItem]="item"
+          (cartItemDeleted)="onCartItemDeleted($event)"
+          (cartItemChanged)="onCartItemChanged($event)"
+        ></app-cartitem>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <h4>Total: {{cartTotal | currency}}</h4>
+    </mat-card-actions>
+  </mat-card>
 </div>

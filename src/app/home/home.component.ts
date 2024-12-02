@@ -49,10 +49,10 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  addToCart(product: Product) {
-    this.cartService.addToCart(product);
+  addToCart(product: { price: number; imageUrl: string; name: string; description: string; id: number }) {
+    const productWithQuantity = { ...product, quantity: 1 };
+    this.cartService.addToCart(productWithQuantity);
     window.alert('Your product has been added to the cart!');
-
   }
 
   loadCart(): void {
