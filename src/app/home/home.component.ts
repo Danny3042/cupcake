@@ -1,68 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import {ActivatedRoute, Route, Router, RouterOutlet} from '@angular/router';
-import { Product } from '../models/product.model';
+import { Component } from '@angular/core';
 import { CartService } from '../services/cart.service';
+import { Product } from '../models/product.model';
 import { products } from '../products';
 import {
+  MatCard,
   MatCardActions,
   MatCardContent,
   MatCardHeader,
   MatCardImage,
-  MatCardModule
+  MatCardSubtitle, MatCardTitle
 } from '@angular/material/card';
-import {MatButton, MatButtonModule} from '@angular/material/button';
-import {CurrencyPipe, NgForOf} from '@angular/common';
-
+import { CommonModule, CurrencyPipe, NgForOf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   imports: [
+    MatCard,
     MatCardHeader,
-    MatCardContent,
-    MatCardActions,
-    MatButtonModule,
-    MatCardImage,
+    MatCardTitle,
+    MatCardSubtitle,
     CurrencyPipe,
+    MatCardContent,
+    MatCardImage,
+    MatCardActions,
+    MatButton,
     NgForOf,
-    MatCardModule
+    CommonModule
   ],
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  title = 'cupcake';
-  isHandset$: Observable<boolean>;
+export class HomeComponent {
   products = products;
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private cartService: CartService,
-    private router : Router,
-  ) {
-    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
-      .pipe(
-        map(result => result.matches),
-        shareReplay()
-      );
-  }
+  constructor(private cartService: CartService) {}
 
-  addToCart(product: { price: number; imageUrl: string; name: string; description: string; id: number }) {
+  addToCart(product: Product) {
     const productWithQuantity = { ...product, quantity: 1 };
     this.cartService.addToCart(productWithQuantity);
     window.alert('Your product has been added to the cart!');
   }
-
-  loadCart(): void {
-    this.products = this.cartService.getItems();
-  }
-
-  loadProducts(): void {
-    this.products = products;
-  }
-  ngOnInit(): void {
-    this.loadProducts();
-  }
-  }
+}

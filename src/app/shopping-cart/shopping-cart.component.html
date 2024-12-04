@@ -1,3 +1,4 @@
+<!-- src/app/shopping-cart/shopping-cart.component.html -->
 <div class="cart-wrapper">
   <mat-card>
     <mat-card-header>
@@ -13,7 +14,7 @@
       </div>
       <div class="cart-items">
         <app-cartitem
-          *ngFor="let item of cartItems; let i = index"
+          *ngFor="let item of cartItems"
           [cartItem]="item"
           (cartItemDeleted)="onCartItemDeleted($event)"
           (cartItemChanged)="onCartItemChanged($event)"

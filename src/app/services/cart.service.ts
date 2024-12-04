@@ -1,3 +1,4 @@
+// src/app/services/cart.service.ts
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 
@@ -7,52 +8,24 @@ import { Product } from '../models/product.model';
 export class CartService {
   private items: Product[] = [];
 
-  constructor() {
-    this.loadItems();
-  }
-
-  private saveItems(): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('cart-items', JSON.stringify(this.items));
-    }
-  }
-
-  private loadItems(): void {
-    if (typeof localStorage !== 'undefined') {
-      const savedItems = localStorage.getItem('cart-items');
-      if (savedItems) {
-        this.items = JSON.parse(savedItems) || [];
-      }
-    }
-  }
-
-  addToCart(product: Product): void {
-    console.log("product added to cart", product);
-    this.items.push(product);
-    console.log("current items in cart: ", this.items);
-    this.saveItems();
+  addToCart(product: Product) {
+    const productWithQuantity = { ...product, quantity: product.quantity || 1 };
+    this.items.push(productWithQuantity);
+    console.log('product added to cart', productWithQuantity);
+    console.log('current items', this.items);
   }
 
   getItems(): Product[] {
-    console.log("Getting items from cart: ", this.items);
+    console.log('items', this.items);
     return this.items;
   }
 
-  clearCart(): Product[] {
+  getCartTotal(): number {
+    return this.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  }
+
+  clearCart() {
     this.items = [];
-    this.saveItems();
     return this.items;
-  }
-
-  removeItem(product: Product): void {
-    const index = this.items.indexOf(product);
-    if (index > 0) {
-      this.items.splice(index, 1);
-      this.saveItems();
-    }
-  }
-
-  getTotalAmount(): number {
-    return this.items.reduce((total, product) => total + product.price, 0);
   }
 }

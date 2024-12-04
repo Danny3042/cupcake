@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../models/product.model';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-import {MatButton} from '@angular/material/button';
-import {CartitemComponent} from '../cartitem/cartitem.component';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import { CurrencyPipe, NgForOf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { CartitemComponent } from '../cartitem/cartitem.component';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -22,32 +22,32 @@ import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} fr
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  total: number = 0;
-  @Input() cartTotal!: number;
-  @Input() cartItems!: Product[];
-  @Output() cartItemDeleted = new EventEmitter<{
-    productId: number
-  }>();
-  @Output() cartItemChanged = new EventEmitter<{
-    productId: number
-  }>();
+  cartItems: Product[] = [];
+  cartTotal: number = 0;
+  @Output() cartItemDeleted = new EventEmitter<{ productId: number }>();
+  @Output() cartItemChanged = new EventEmitter<{ productId: number }>();
 
-  onCartItemDeleted(productData:{productId: number}) {
+  constructor(private cartService: CartService) {}
+
+  ngOnInit() {
+    console.log('cart service', this.cartService);
+    this.getCartItems();
+  }
+
+  onCartItemDeleted(productData: { productId: number }) {
     this.cartItemDeleted.emit({
       productId: productData.productId
     });
   }
 
-  onCartItemChanged(productData:{productId: number}) {
+  onCartItemChanged(productData: { productId: number }) {
     this.cartItemChanged.emit({
       productId: productData.productId
     });
   }
 
-  constructor() {
+  getCartItems() {
+    this.cartItems = this.cartService.getItems();
+    this.cartTotal = this.cartService.getCartTotal();
   }
-
-  ngOnInit() {
-  }
-
 }
