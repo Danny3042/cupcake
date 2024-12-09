@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import {CartItem, Product} from '../models/product.model';
+import { Product } from '../models/product.model';
 import { products } from '../products';
 import {
   MatCard,
@@ -12,7 +12,6 @@ import {
 } from '@angular/material/card';
 import { CommonModule, CurrencyPipe, NgForOf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
-import {Subscription, window} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -32,32 +31,14 @@ import {Subscription, window} from 'rxjs';
   ],
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent {
   products = products;
-
-  cartItems: CartItem[] = [];
-  private cartSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService) {}
 
   addToCart(product: Product) {
     const productWithQuantity = { ...product, quantity: 1 };
     this.cartService.addToCart(productWithQuantity);
-  }
-
-  ngOnInit(): void {
-    this.cartSubscription = this.cartService.getCartItems().subscribe((cartItems) => {
-      this.cartItems = cartItems;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.cartSubscription) {
-      this.cartSubscription.unsubscribe();
-    }
-  }
-
-  getTotalPrice(): number {
-    return this.cartService.getTotalPrice();
+    window.alert('Your product has been added to the cart!');
   }
 }
