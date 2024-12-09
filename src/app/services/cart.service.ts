@@ -1,31 +1,46 @@
-// src/app/services/cart.service.ts
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CartItem, Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private items: Product[] = [];
+  private cartItems: CartItem[] = [];
+  private cartSubject: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
 
-  addToCart(product: Product) {
-    const productWithQuantity = { ...product, quantity: product.quantity || 1 };
-    this.items.push(productWithQuantity);
-    console.log('product added to cart', productWithQuantity);
-    console.log('current items', this.items);
+  constructor() {}
+
+  getCartItems(): Observable<CartItem[]> {
+    return this.cartSubject.asObservable();
   }
 
-  getItems(): Product[] {
-    console.log('items', this.items);
-    return this.items;
+  addToCart(product: Product): void {
+    const existingItem = this.cartItems.find(item => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      this.cartItems.push({ ...product, quantity: 1 });
+    }
+    this.updateCart();
   }
 
-  getCartTotal(): number {
-    return this.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  removeFromCart(productId: number): void {
+    this.cartItems = this.cartItems.filter(item => item.id !== productId);
+    this.updateCart();
   }
 
-  clearCart() {
-    this.items = [];
-    return this.items;
+  clearCart(): void {
+    this.cartItems = [];
+    this.updateCart();
+  }
+
+  getTotalPrice(): number {
+    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
+  private updateCart(): void {
+    this.cartSubject.next([...this.cartItems]);
   }
 }
+

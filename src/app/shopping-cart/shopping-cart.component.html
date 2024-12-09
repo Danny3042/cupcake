@@ -1,28 +1,28 @@
-<!-- src/app/shopping-cart/shopping-cart.component.html -->
-<div class="cart-wrapper">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Shopping Cart</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="cart-header">
-        <div>Item</div>
-        <div>Price</div>
-        <div>Quantity</div>
-        <div>Total Price</div>
-        <div></div>
-      </div>
-      <div class="cart-items">
-        <app-cartitem
-          *ngFor="let item of cartItems"
-          [cartItem]="item"
-          (cartItemDeleted)="onCartItemDeleted($event)"
-          (cartItemChanged)="onCartItemChanged($event)"
-        ></app-cartitem>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <h4>Total: {{cartTotal | currency}}</h4>
-    </mat-card-actions>
-  </mat-card>
+<div>
+  <h1 class="mat-display-1 mb-6">Shopping Cart</h1>
+  <ng-container *ngIf="cartItems.length === 0; else cartList">
+    <p>Your cart is empty.</p>
+  </ng-container>
+  <ng-template #cartList>
+    <mat-list>
+      <mat-list-item *ngFor="let item of cartItems">
+        <mat-card class="w-full">
+          <mat-card-header>
+            <mat-card-title>{{ item.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>${{ item.price.toFixed(2) }} x {{ item.quantity }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="warn" (click)="removeFromCart(item.id)">Remove</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-list-item>
+    </mat-list>
+    <mat-divider></mat-divider>
+    <div class="flex items-center justify-between pt-4">
+      <p class="mat-subheading-2">Total: ${{ getTotalPrice().toFixed(2) }}</p>
+      <button mat-raised-button color="primary" (click)="clearCart()">Clear Cart</button>
+    </div>
+  </ng-template>
 </div>
