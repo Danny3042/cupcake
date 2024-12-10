@@ -32,13 +32,16 @@ import { MatButton } from '@angular/material/button';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  products = products;
+  products: Product[] = products;
+  isInCart: boolean = false;
 
   constructor(private cartService: CartService) {}
 
   addToCart(product: Product) {
-    const productWithQuantity = { ...product, quantity: 1 };
-    this.cartService.addToCart(productWithQuantity);
+    if(this.products) {
+      this.cartService.addItem(String(product.id));
+      this.isInCart = true;
+    }
     window.alert('Your product has been added to the cart!');
   }
 }

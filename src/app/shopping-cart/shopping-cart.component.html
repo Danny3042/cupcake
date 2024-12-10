@@ -1,28 +1,57 @@
-<div>
-  <h1 class="mat-display-1 mb-6">Shopping Cart</h1>
-  <ng-container *ngIf="cartItems.length === 0; else cartList">
-    <p>Your cart is empty.</p>
-  </ng-container>
-  <ng-template #cartList>
-    <mat-list>
-      <mat-list-item *ngFor="let item of cartItems">
-        <mat-card class="w-full">
-          <mat-card-header>
-            <mat-card-title>{{ item.name }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>${{ item.price.toFixed(2) }} x {{ item.quantity }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="warn" (click)="removeFromCart(item.id)">Remove</button>
-          </mat-card-actions>
-        </mat-card>
-      </mat-list-item>
-    </mat-list>
-    <mat-divider></mat-divider>
-    <div class="flex items-center justify-between pt-4">
-      <p class="mat-subheading-2">Total: ${{ getTotalPrice().toFixed(2) }}</p>
-      <button mat-raised-button color="primary" (click)="clearCart()">Clear Cart</button>
-    </div>
-  </ng-template>
+<!-- shopping-cart.component.html -->
+<div class="p-24">
+  <table *ngIf="cartItems.length > 0; else emptyCart" mat-table>
+    <tr>
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <th mat-header-cell *matHeaderCellDef>Product</th>
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <th mat-header-cell *matHeaderCellDef>Increase</th>
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <th mat-header-cell *matHeaderCellDef>Decrease</th>
+      <th mat-header-cell *matHeaderCellDef>Remove</th>
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+    </tr>
+    <tr mat-row *matRowDef="let item; columns: displayedColumns;">
+      <td mat-cell *matCellDef="let item">
+        <img [src]="item.product.imageUrl" alt="Product Image" class="w-full h-auto" />
+      </td>
+      <td mat-cell *matCellDef="let item">{{ item.product.description }}</td>
+      <td mat-cell *matCellDef="let item">RS {{ item.product.price }}</td>
+      <td mat-cell *matCellDef="let item">
+        <button mat-icon-button (click)="increaseQuantity(item.product.id)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </td>
+      <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+      <td mat-cell *matCellDef="let item">
+        <button mat-icon-button (click)="decreaseQuantity(item.product.id)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </td>
+      <td mat-cell *matCellDef="let item">
+        <button mat-icon-button (click)="removeFromCart(item.product.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+      <td mat-cell *matCellDef="let item">RS {{ item.quantity * item.product.price }}</td>
+    </tr>
+  </table>
 </div>
+
+<div class="flex justify-between p-5 fixed w-full bg-black bottom-0 z-10 text-white">
+  <div class="total-price">
+    <h3>Total Cost: RS {{ totalCost() }}</h3>
+  </div>
+  <button mat-raised-button color="primary" [disabled]="!hasItems()" (click)="checkout()">
+    Checkout
+  </button>
+</div>
+<ng-template #emptyCart>
+  <div class="flex justify-center">
+    <p style="padding: 20px">
+      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 4680 3120" viewBox="0 0 4680 3120" width="550" height="550">
+        <!-- SVG content -->
+      </svg>
+    </p>
+  </div>
+</ng-template>

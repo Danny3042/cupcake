@@ -1,57 +1,105 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+// shopping-cart.component.ts
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../models/product.model';
+import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
-import {CartItem, Product} from '../models/product.model';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import {MatList, MatListItem} from '@angular/material/list';
-import {MatDivider} from '@angular/material/divider';
-import {Subscription} from 'rxjs';
+import { ProductService } from '../services/product.service';
+import {
+  MatCell, MatCellDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatRow, MatRowDef,
+  MatTable
+} from '@angular/material/table';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   imports: [
-    NgForOf,
-    MatCardActions,
-    MatCardContent,
-    MatCardTitle,
-    MatCardHeader,
-    MatCard,
     NgIf,
-    MatList,
-    MatListItem,
-    MatDivider,
-    MatButton
+    MatHeaderCell,
+    MatRow,
+    MatCell,
+    MatIconButton,
+    MatIcon,
+    MatButton,
+    MatTable,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatRowDef
   ],
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit, OnDestroy {
-  cartItems: CartItem[] = [];
-  private cartSubscription: Subscription | undefined;
-  constructor(private cartService: CartService) {}
+export class ShoppingCartComponent implements OnInit {
+  cartItems: { product: Product, quantity: number }[] = [];
+  displayedColumns: string[] = ['name', 'price', 'quantity', 'total', 'actions'];
 
-  ngOnInit() {
-    this.cartService.getCartItems().subscribe((cartItems) => {
-      this.cartItems = cartItems;
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loadCartItems();
+  }
+
+  private loadCartItems(): void {
+    const cart = this.cartService.getItems();
+    this.cartItems = [];
+
+    cart.forEach(([productId, quantity]) => {
+      this.productService.getProduct(productId).subscribe((product) => {
+        this.cartItems.push({ product, quantity });
+      });
     });
   }
 
-  removeFromCart(productId: number) {
-    this.cartService.removeFromCart(productId);
+  increaseQuantity(productId: string): void {
+    this.cartService.addItem(productId);
+    this.updateCart();
   }
 
-  clearCart() {
-    this.cartService.clearCart();
+  decreaseQuantity(productId: string): void {
+    this.cartService.decreaseItem(productId);
+    this.updateCart();
   }
 
-  getTotalPrice() {
-    return this.cartService.getTotalPrice();
+  removeFromCart(productId: number): void {
+    this.cartService.removeItem(productId);
+    this.cartItems = this.cartItems.filter(
+      (item) => item.product.id !== productId
+    );
   }
 
-  ngOnDestroy(): void {
-    if (this.cartSubscription) {
-      this.cartSubscription.unsubscribe();
-    }
+  get items(): any[] {
+    return this.cartService.getItems();
+  }
+
+  totalCost(): number {
+    return this.cartItems.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
+  }
+
+  hasItems(): boolean {
+    return this.cartItems.length > 0;
+  }
+
+  checkout(): void {
+    this.router.navigate(['/checkout']);
+  }
+
+  private updateCart(): void {
+    const cart = this.cartService.getItems();
+    this.cartItems = [];
+    cart.forEach(([productId, quantity]) => {
+      this.productService.getProduct(productId).subscribe((product) => {
+        this.cartItems.push({ product, quantity });
+      });
+    });
   }
 }

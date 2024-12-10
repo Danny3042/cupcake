@@ -1,0 +1,87 @@
+<mat-toolbar color="primary">
+  <span>Checkout</span>
+</mat-toolbar>
+<main>
+  <section class="checkout-form">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input matInput id="checkout-email" formControlName="email" type="email" />
+        <mat-error *ngIf="checkoutForm.get('email')?.invalid">
+          <span *ngIf="checkoutForm.get('email')?.errors?.['required']">Email is required.</span>
+          <span *ngIf="checkoutForm.get('email')?.errors?.['email']">Enter a valid email.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput id="phone" formControlName="phone" type="text" />
+        <mat-error *ngIf="checkoutForm.get('phone')?.invalid">
+          <span *ngIf="checkoutForm.get('phone')?.errors?.['required']">Phone number is required.</span>
+          <span *ngIf="checkoutForm.get('phone')?.errors?.['pattern']">Enter a valid phone number.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput id="name" formControlName="name" type="text" />
+        <mat-error *ngIf="checkoutForm.get('name')?.invalid">
+          <span *ngIf="checkoutForm.get('name')?.errors?.['required']">Full name is required.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput id="address" formControlName="address" type="text" />
+        <mat-error *ngIf="checkoutForm.get('address')?.invalid">
+          <span *ngIf="checkoutForm.get('address')?.errors?.['required']">Address is required.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <input matInput id="city" formControlName="city" type="text" />
+        <mat-error *ngIf="checkoutForm.get('city')?.invalid">
+          <span *ngIf="checkoutForm.get('city')?.errors?.['required']">City is required.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-control-btn">
+        <button mat-raised-button color="primary" type="submit" (click)="checkout()">Checkout</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="checkout-details" *ngIf="cartItems.length > 0; else emptyCart">
+    <div class="checkout-details-inner">
+      <div class="checkout-lists" *ngFor="let item of cartItems">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{ item.product.name }}</mat-card-title>
+            <mat-card-subtitle>RS {{ item.product.price }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="{{ item.product.imageUrl }}" alt="" />
+          <mat-card-content>
+            <div class="card-wheel">
+              <button mat-icon-button (click)="decreaseQuantity(item.product.id)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span>{{ item.quantity }}</span>
+              <button mat-icon-button (click)="increaseQuantity(item.product.id)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="checkout-total">
+        <h6>Total</h6>
+        <p>RS {{ totalCost() }}</p>
+      </div>
+    </div>
+  </section>
+</main>
+<ng-template #emptyCart>
+  <p>Your cart is empty.</p>
+</ng-template>
